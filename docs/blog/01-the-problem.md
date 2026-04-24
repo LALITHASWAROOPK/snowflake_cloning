@@ -126,31 +126,7 @@ Excited, we told the dev team their environment was ready.
 
 **Three days of troubleshooting** revealed the harsh truth: Zero-copy cloning is only 10% of the solution.
 
-## Problem 1: Broken Permissions
-
-```sql
--- Check permissions after cloning
-SHOW GRANTS ON DATABASE dev_project_db;
-```
-
-**Result:**
-```
-| privilege | grantee_name      |
-|-----------|-------------------|
-| OWNERSHIP | PROD_ADMIN_ROLE   |  ⚠️ Production role!
-| USAGE     | PROD_READ_ONLY    |  ⚠️ Production role!
-| MONITOR   | PROD_DBA_ROLE     |  ⚠️ Production role!
-```
-
-**The problem:**
-- Clone inherited all production role grants
-- Dev team roles aren't granted anything
-- Can't modify permissions without production admin role
-- Production roles shouldn't exist in dev environment
-
-**Impact:** Developers locked out of their own database for 4 hours while we manually fixed 450+ object permissions.
-
-## Problem 2: Database References Point to Production
+## Problem 1: Database References Point to Production
 
 ```sql
 -- Check a simple view in the clone
@@ -179,6 +155,30 @@ GROUP BY c.customer_id, c.customer_name;
 Out of 280 views, **186 had hardcoded production references**. Our "dev" database was actually a production read client.
 
 **Impact:** A developer testing a new ETL procedure almost deleted production data.
+
+## Problem 2: Broken Permissions
+
+```sql
+-- Check permissions after cloning
+SHOW GRANTS ON DATABASE dev_project_db;
+```
+
+**Result:**
+```
+| privilege | grantee_name      |
+|-----------|-------------------|
+| OWNERSHIP | PROD_ADMIN_ROLE   |  ⚠️ Production role!
+| USAGE     | PROD_READ_ONLY    |  ⚠️ Production role!
+| MONITOR   | PROD_DBA_ROLE     |  ⚠️ Production role!
+```
+
+**The problem:**
+- Clone inherited all production role grants
+- Dev team roles aren't granted anything
+- Can't modify permissions without production admin role
+- Production roles shouldn't exist in dev environment
+
+**Impact:** Developers locked out of their own database for 4 hours while we manually fixed 450+ object permissions.
 
 ## Problem 3: Streams Are Dead
 
