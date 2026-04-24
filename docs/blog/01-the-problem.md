@@ -360,7 +360,7 @@ CALL sp_clone_create_master('PROJECT', 'customer360', 'DEV');
 
 ## The Journey Ahead
 
-Over the next three posts, I'll show you exactly how we built this:
+We've seen the problem, now let's solve it. Over the next posts, I'll show you exactly how we built this:
 
 - **[Part 2](02-repointing-streams.md)**: Repointing database references, recreating streams, and handling Iceberg tables
 - **[Part 3](03-permissions-rbac.md)**: Permission management and RBAC patterns that work across environments
@@ -380,9 +380,15 @@ All code is available in the [GitHub repository](https://github.com/LALITHASWARO
 
 ---
 
-**Next:** [Part 2: Solving Permissions and RBAC in Cloned Databases →](02-permissions-rbac.md)
+## 👉 Continue Reading
 
-**Code:** [GitHub Repository](https://github.com/LALITHASWAROOPK/snowflake_cloning)
+The most immediately visible problem? **Views and procedures pointing to production.**
+
+In **Part 2**, I'll show you how to automatically find and fix every database reference using GET_DDL, string replacement, and parallel processing—plus how to handle Iceberg tables and recreate streams properly.
+
+**[Read Part 2: Repointing Database References and Recreating Streams →](02-repointing-streams.md)**
+
+Or jump to: [Part 3: Permissions & RBAC](03-permissions-rbac.md) | [Part 4: Production Features](04-advanced-topics.md) | [GitHub Code](https://github.com/LALITHASWAROOPK/snowflake_cloning)
 
 ---
 
