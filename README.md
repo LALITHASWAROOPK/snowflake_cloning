@@ -213,8 +213,8 @@ MIT License - See LICENSE file for details
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/snowflake_cloning/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/snowflake_cloning/discussions)
+- **Issues**: [GitHub Issues](https://github.com/LALITHASWAROOPK/snowflake_cloning/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/LALITHASWAROOPK/snowflake_cloning/discussions)
 - **Blog Series**: [Link to published blog]
 
 ## Acknowledgments
