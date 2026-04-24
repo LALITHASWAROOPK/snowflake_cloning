@@ -1,8 +1,8 @@
-# Part 3: Repointing Database References and Recreating Streams
+# Part 2: Repointing Database References and Recreating Streams
 
-**Previously:** In [Part 2](02-permissions-rbac.md), we solved permission problems with dynamic role creation and RBAC mapping.
+**Previously:** In [Part 1](01-the-problem.md), we saw how zero-copy cloning is revolutionary but leaves us with broken references everywhere.
 
-**In this post:** Learn how to find and fix hardcoded database references in views, stored procedures, functions, and tasks — plus how to recreate streams that broke during cloning.
+**In this post:** Learn how to find and fix hardcoded database references in views, stored procedures, functions, tasks, and Iceberg tables — plus how to recreate streams that broke during cloning.
 
 ---
 
@@ -427,6 +427,64 @@ $$;
 
 ---
 
+## Handling Iceberg Tables
+
+Iceberg tables introduce additional complexity when repointing because they reference external volumes.
+
+### The Challenge
+
+After cloning, Iceberg tables still point to production external volumes:
+
+```sql
+-- Check Iceberg table after cloning
+SHOW ICEBERG TABLES IN dev_db;
+-- EXTERNAL_VOLUME: prod_iceberg_volume ⚠️
+
+-- Try to query
+SELECT * FROM dev_db.data.events_iceberg;
+-- Error: Database DEV_DB does not have READ access to EXTERNAL VOLUME 'prod_iceberg_volume'
+```
+
+### Solution: Grant Volume Access
+
+```javascript
+// During repoint, identify and grant Iceberg volume access
+var icebergTables = execSQL(
+    "SELECT DISTINCT external_volume " +
+    "FROM clone_db.INFORMATION_SCHEMA.TABLES " +
+    "WHERE table_type IN ('ICEBERG TABLE', 'DYNAMIC ICEBERG TABLE') " +
+    "AND external_volume IS NOT NULL"
+);
+
+for each volume in icebergTables:
+    execSQL("GRANT READ ON EXTERNAL VOLUME " + volume + " TO DATABASE " + clone_db);
+```
+
+**Security consideration:** Dev environment now has read access to production Iceberg storage. This is usually acceptable for clones since:
+- They share the same data anyway (zero-copy)
+- Access is read-only
+- Cost tracking separates dev/prod compute
+
+### Dynamic Iceberg Tables
+
+Dynamic Iceberg tables lose their "dynamic" status after cloning:
+
+```javascript
+// Flag dynamic Iceberg tables for manual review
+var dynamicIceberg = execSQL(
+    "SELECT table_schema, table_name " +
+    "FROM clone_db.INFORMATION_SCHEMA.TABLES " +
+    "WHERE table_type = 'DYNAMIC ICEBERG TABLE'"
+);
+
+// Log warning: These tables exist but won't refresh automatically
+// Must be recreated or converted to static if needed in clone
+```
+
+**Full Iceberg guide:** See [docs/iceberg-considerations.md](../iceberg-considerations.md) for detailed handling strategies.
+
+---
+
 ## Production Metrics
 
 After implementing automated repointing:
@@ -443,27 +501,30 @@ After implementing automated repointing:
 
 ## What's Next?
 
-We've now solved:
-- ✅ Permissions and RBAC
+We've now solved the most visible problem:
 - ✅ Database reference repointing
 - ✅ Stream recreation
+- ✅ Iceberg table handling
 
-But our solution still processes schemas **sequentially**. In Part 4, we'll add:
+But even with all references fixed, you **still can't access anything** without proper permissions! In Part 3, we'll tackle:
 
+- **Permission management** - Dynamic role creation
+- **RBAC automation** - Configuration-driven grants
+- **Ownership transfers** - Breaking free from production roles
+
+Then in Part 4:
 - **Parallel processing** with ASYNC/AWAIT (73% faster)
 - **Resume-from-failure** capabilities
-- **Audit logging** and observability
-- **Task suspension** for cost control
 - **Production-grade** orchestration
 
 ---
 
-**Next:** [Part 4: Parallelization and Production Features →](04-advanced-topics.md)  
-**Previous:** [Part 2: Solving Permissions and RBAC](02-permissions-rbac.md)  
+**Next:** [Part 3: Solving Permissions and RBAC →](03-permissions-rbac.md)  
+**Previous:** [Part 1: The Problem and the Promise](01-the-problem.md)  
 **Code:** [`sql/02_clone_repoint.sql`](../../sql/02_clone_repoint.sql), [`sql/03_clone_streams.sql`](../../sql/03_clone_streams.sql)
 
 ---
 
 **About This Series**
 
-This is Part 3 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with complete documentation and examples.
+This is Part 2 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with complete documentation and examples.

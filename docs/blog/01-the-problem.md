@@ -362,8 +362,8 @@ CALL sp_clone_create_master('PROJECT', 'customer360', 'DEV');
 
 Over the next three posts, I'll show you exactly how we built this:
 
-- **[Part 2](02-permissions-rbac.md)**: Permission and RBAC patterns that work across environments
-- **[Part 3](03-repointing-streams.md)**: Repointing database references and recreating streams
+- **[Part 2](02-repointing-streams.md)**: Repointing database references, recreating streams, and handling Iceberg tables
+- **[Part 3](03-permissions-rbac.md)**: Permission management and RBAC patterns that work across environments
 - **[Part 4](04-advanced-topics.md)**: Parallelization, recovery, and production-grade features
 
 All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with comprehensive documentation.

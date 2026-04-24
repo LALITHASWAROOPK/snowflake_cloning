@@ -1,6 +1,6 @@
 # Part 4: Parallelization and Production Features
 
-**Previously:** In [Part 3](03-repointing-streams.md), we learned how to repoint database references and recreate streams.
+**Previously:** In [Part 3](03-permissions-rbac.md), we automated permission management with dynamic RBAC provisioning.
 
 **In this post:** Scale your cloning operations with parallel processing, add resume-from-failure capabilities, implement audit logging, and build production-grade orchestration.
 
@@ -591,8 +591,8 @@ Drop clones after N days to control costs.
 
 **Blog Series:**
 - [Part 1: The Problem and the Promise](01-the-problem.md)
-- [Part 2: Solving Permissions and RBAC](02-permissions-rbac.md)
-- [Part 3: Repointing References and Recreating Streams](03-repointing-streams.md)
+- [Part 2: Repointing References and Recreating Streams](02-repointing-streams.md)
+- [Part 3: Solving Permissions and RBAC](03-permissions-rbac.md)
 - Part 4: Parallelization and Production Features (this post)
 
 **Special Topics:**
@@ -606,7 +606,7 @@ Drop clones after N days to control costs.
 
 ---
 
-**Previous:** [Part 3: Repointing Database References and Recreating Streams](03-repointing-streams.md)  
+**Previous:** [Part 3: Solving Permissions and RBAC in Cloned Databases](03-permissions-rbac.md)  
 **Series Start:** [Introduction and Overview](00-overview.md)
 
 ---

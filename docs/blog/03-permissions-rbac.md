@@ -1,6 +1,6 @@
-# Part 2: Solving Permissions and RBAC in Cloned Databases
+# Part 3: Solving Permissions and RBAC in Cloned Databases
 
-**Previously:** In [Part 1](01-the-problem.md), we discovered why zero-copy cloning is revolutionary but leaves you with broken permissions and production roles in dev environments.
+**Previously:** In [Part 2](02-repointing-streams.md), we fixed all the broken database references. But even with correct references, you still can't access anything without proper permissions!
 
 **In this post:** Learn how to programmatically manage permissions in cloned databases with dynamic role creation, ownership transfers, and automated RBAC provisioning.
 
@@ -376,22 +376,26 @@ After implementing automated RBAC:
 
 ## What's Next?
 
-We've solved permissions, but our clones still have a critical flaw: **views, procedures, and streams still point to production**.
+We've solved both major challenges:
+- ✅ Database reference repointing (Part 2)
+- ✅ Permissions and RBAC (Part 3)
 
-In Part 3, we'll tackle:
-- Finding all hardcoded database references
-- Repointing at scale with parallel processing
-- Recreating streams with updated references
-- Validation and health checks
+But our solution still processes schemas **sequentially**. In Part 4, we'll make it production-ready with:
+
+- **Parallel processing** with ASYNC/AWAIT (73% faster)
+- **Resume-from-failure** capabilities
+- **Audit logging** and observability
+- **Task suspension** for cost control
+- **Production-grade** orchestration
 
 ---
 
-**Next:** [Part 3: Repointing Database References →](03-repointing-streams.md)  
-**Previous:** [Part 1: The Problem and the Promise](01-the-problem.md)  
+**Next:** [Part 4: Parallelization and Production Features →](04-advanced-topics.md)  
+**Previous:** [Part 2: Repointing Database References](02-repointing-streams.md)  
 **Code:** [sql/04_clone_rbac.sql](../../sql/04_clone_rbac.sql)
 
 ---
 
 **About This Series**
 
-This is Part 2 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with complete documentation and examples.
+This is Part 3 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with complete documentation and examples.

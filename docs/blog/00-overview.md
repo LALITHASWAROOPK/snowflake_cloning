@@ -34,7 +34,24 @@ Start with the promise of zero-copy cloning, then discover why it breaks in prod
 
 ---
 
-### [Part 2: Solving Permissions and RBAC](02-permissions-rbac.md)
+### [Part 2: Repointing References and Recreating Streams](02-repointing-streams.md)
+**Read Time:** 15 minutes
+
+Master the techniques for finding and fixing hardcoded database references in views, procedures, functions, and tasks—plus how to recreate streams and handle Iceberg tables properly after cloning.
+
+**Key Topics:**
+- Finding stale references via INFORMATION_SCHEMA
+- GET_DDL and string replacement strategies
+- Handling procedure parameter signatures
+- Stream recreation patterns
+- Iceberg table repointing and volume access
+- Validation and health checks
+
+**Code Reference:** [`sql/02_clone_repoint.sql`](../../sql/02_clone_repoint.sql), [`sql/03_clone_streams.sql`](../../sql/03_clone_streams.sql)
+
+---
+
+### [Part 3: Solving Permissions and RBAC](03-permissions-rbac.md)
 **Read Time:** 12 minutes
 
 Deep dive into automated RBAC provisioning for cloned databases. Learn patterns for dynamic role creation, ownership transfers, and environment-specific permission mapping.
@@ -47,22 +64,6 @@ Deep dive into automated RBAC provisioning for cloned databases. Learn patterns 
 - Future grant management
 
 **Code Reference:** [`sql/04_clone_rbac.sql`](../../sql/04_clone_rbac.sql)
-
----
-
-### [Part 3: Repointing References and Recreating Streams](03-repointing-streams.md)
-**Read Time:** 15 minutes
-
-Master the techniques for finding and fixing hardcoded database references in views, procedures, functions, and tasks—plus how to recreate streams properly after cloning.
-
-**Key Topics:**
-- Finding stale references via INFORMATION_SCHEMA
-- GET_DDL and string replacement strategies
-- Handling procedure parameter signatures
-- Stream recreation patterns
-- Validation and health checks
-
-**Code Reference:** [`sql/02_clone_repoint.sql`](../../sql/02_clone_repoint.sql), [`sql/03_clone_streams.sql`](../../sql/03_clone_streams.sql)
 
 ---
 
