@@ -126,7 +126,7 @@ Excited, we told the dev team their environment was ready.
 
 **Three days of troubleshooting** revealed the harsh truth: Zero-copy cloning is only 10% of the solution.
 
-## Problem 1: Database References Point to Production
+## Problem 1: Your "Dev" Database Is Secretly Reading Production
 
 ```sql
 -- Check a simple view in the clone
@@ -156,7 +156,7 @@ Out of 280 views, **186 had hardcoded production references**. Our "dev" databas
 
 **Impact:** A developer testing a new ETL procedure almost deleted production data.
 
-## Problem 2: Broken Permissions
+## Problem 2: Developers Locked Out of Their Own Database
 
 ```sql
 -- Check permissions after cloning
@@ -223,7 +223,7 @@ SHOW TASKS IN DATABASE dev_project_db;
 
 **Impact:** $240 wasted in first month before we noticed, plus several false production alerts.
 
-## Problem 5: Iceberg Table Limitations
+## Problem 5: The Iceberg Table Trap
 
 Our newest challenge: We use **Iceberg tables managed by Snowflake** for high-volume data.
 
