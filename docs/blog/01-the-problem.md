@@ -156,31 +156,7 @@ Out of 280 views, **186 had hardcoded production references**. Our "dev" databas
 
 **Impact:** A developer testing a new ETL procedure almost deleted production data.
 
-## Problem 2: Developers Locked Out of Their Own Database
-
-```sql
--- Check permissions after cloning
-SHOW GRANTS ON DATABASE dev_project_db;
-```
-
-**Result:**
-```
-| privilege | grantee_name      |
-|-----------|-------------------|
-| OWNERSHIP | PROD_ADMIN_ROLE   |  ⚠️ Production role!
-| USAGE     | PROD_READ_ONLY    |  ⚠️ Production role!
-| MONITOR   | PROD_DBA_ROLE     |  ⚠️ Production role!
-```
-
-**The problem:**
-- Clone inherited all production role grants
-- Dev team roles aren't granted anything
-- Can't modify permissions without production admin role
-- Production roles shouldn't exist in dev environment
-
-**Impact:** Developers locked out of their own database for 4 hours while we manually fixed 450+ object permissions.
-
-## Problem 3: Streams Are Dead
+## Problem 2: Streams Are Dead
 
 ```sql
 -- Check stream health
@@ -201,29 +177,7 @@ Streams don't get "repointed" during cloning. They still reference the source ta
 
 **Impact:** 47 CDC pipelines broken, 3 hours to identify and recreate all streams.
 
-## Problem 4: Tasks Running Wild
-
-Our production database had 23 scheduled tasks:
-- Hourly metric refreshes
-- Daily aggregations
-- Real-time alert processing
-
-**The clone inherited all these tasks—and they started executing!**
-
-```sql
-SHOW TASKS IN DATABASE dev_project_db;
--- Result: 23 tasks, STATE = 'started' ⚠️
-```
-
-**Consequences:**
-- Tasks trying to write to production (errors)
-- Unnecessary compute costs (~$240/month per clone)
-- Alerts flooding wrong channels
-- Confusion about which environment is which
-
-**Impact:** $240 wasted in first month before we noticed, plus several false production alerts.
-
-## Problem 5: The Iceberg Table Trap
+## Problem 3: The Iceberg Table Trap
 
 Our newest challenge: We use **Iceberg tables managed by Snowflake** for high-volume data.
 
@@ -275,6 +229,52 @@ GRANT READ ON EXTERNAL VOLUME prod_iceberg_volume
 2. Create Iceberg tables as regular tables in clones (losesmeta benefits)
 
 **Impact:** 2 additional hours per clone for Iceberg table handling, ongoing security audit concerns.
+
+## Problem 4: Tasks Running Wild
+
+Our production database had 23 scheduled tasks:
+- Hourly metric refreshes
+- Daily aggregations
+- Real-time alert processing
+
+**The clone inherited all these tasks—and they started executing!**
+
+```sql
+SHOW TASKS IN DATABASE dev_project_db;
+-- Result: 23 tasks, STATE = 'started' ⚠️
+```
+
+**Consequences:**
+- Tasks trying to write to production (errors)
+- Unnecessary compute costs (~$240/month per clone)
+- Alerts flooding wrong channels
+- Confusion about which environment is which
+
+**Impact:** $240 wasted in first month before we noticed, plus several false production alerts.
+
+## Problem 5: Developers Locked Out of Their Own Database
+
+```sql
+-- Check permissions after cloning
+SHOW GRANTS ON DATABASE dev_project_db;
+```
+
+**Result:**
+```
+| privilege | grantee_name      |
+|-----------|-------------------|
+| OWNERSHIP | PROD_ADMIN_ROLE   |  ⚠️ Production role!
+| USAGE     | PROD_READ_ONLY    |  ⚠️ Production role!
+| MONITOR   | PROD_DBA_ROLE     |  ⚠️ Production role!
+```
+
+**The problem:**
+- Clone inherited all production role grants
+- Dev team roles aren't granted anything
+- Can't modify permissions without production admin role
+- Production roles shouldn't exist in dev environment
+
+**Impact:** Developers locked out of their own database for 4 hours while we manually fixed 450+ object permissions.
 
 ## The Real Cost of "Simple" Cloning
 
