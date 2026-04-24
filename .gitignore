@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Environment
+.env
+.env.local
+
+# Node modules (if adding web UI later)
+node_modules/
+
+# Python virtual environment
+venv/
+env/
+ENV/
+
+# Credentials (never commit these!)
+*credentials*
+*secrets*
+*.pem
+*.key
+
+# Local test files
+test_local/
+scratch/
+_archive/
