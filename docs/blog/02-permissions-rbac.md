@@ -394,4 +394,4 @@ In Part 3, we'll tackle:
 
 **About This Series**
 
-This is Part 2 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/yourusername/snowflake_cloning) with complete documentation and examples.
+This is Part 2 of a 4-part series on production-grade Snowflake database cloning. All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with complete documentation and examples.

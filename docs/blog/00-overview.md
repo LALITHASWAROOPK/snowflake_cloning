@@ -92,14 +92,14 @@ Scale your cloning operations with ASYNC/AWAIT parallelization, add resume-from-
 ## What Makes This Different
 
 1. **Real Production Experience** - Based on actual implementations, not theory
-2. **Complete Working Code** - All procedures available in the [GitHub repository](https://github.com/yourusername/snowflake_cloning)
+2. **Complete Working Code** - All procedures available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning)
 3. **Performance Focus** - Proven patterns that actually scale
 4. **Reliability First** - Resume-from-failure and comprehensive error handling
 5. **Iceberg Reality** - Addresses modern table formats and external volumes
 
 ## Code Repository
 
-All procedures and examples: [github.com/yourusername/snowflake_cloning](https://github.com/yourusername/snowflake_cloning)
+All procedures and examples: [github.com/LALITHASWAROOPK/snowflake_cloning](https://github.com/LALITHASWAROOPK/snowflake_cloning)
 
 - Generic templates with placeholder substitution
 - Production-tested error handling

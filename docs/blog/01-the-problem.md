@@ -366,7 +366,7 @@ Over the next three posts, I'll show you exactly how we built this:
 - **[Part 3](03-repointing-streams.md)**: Repointing database references and recreating streams
 - **[Part 4](04-advanced-topics.md)**: Parallelization, recovery, and production-grade features
 
-All code is available in the [GitHub repository](https://github.com/yourusername/snowflake_cloning) with comprehensive documentation.
+All code is available in the [GitHub repository](https://github.com/LALITHASWAROOPK/snowflake_cloning) with comprehensive documentation.
 
 ## Key Takeaways
 
@@ -382,7 +382,7 @@ All code is available in the [GitHub repository](https://github.com/yourusername
 
 **Next:** [Part 2: Solving Permissions and RBAC in Cloned Databases →](02-permissions-rbac.md)
 
-**Code:** [GitHub Repository](https://github.com/yourusername/snowflake_cloning)
+**Code:** [GitHub Repository](https://github.com/LALITHASWAROOPK/snowflake_cloning)
 
 ---
 
